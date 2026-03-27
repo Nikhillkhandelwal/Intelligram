@@ -1,0 +1,49 @@
+# Node
+node_modules/
+**/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+*.local
+
+# Python
+**/__pycache__/
+__pycache__/
+*.py[cod]
+*$py.class
+env/
+venv/
+.env
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+backend/app.db
+backend/posts_cache.json
+server.log
+*.txt
+*.png
+*.webp
+*.jpg
+!README.md
+
+# System/IDE
+.gemini/
+.antigravity/
+.agents/
+.agent/
+_agents/
+_agent/
+brain/
+playwright_profile/
+**/playwright_profile/

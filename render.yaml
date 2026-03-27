@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: intelligram-growth-system
+    env: python
+    buildCommand: "cd frontend && npm install && npm run build && cd ../backend && pip install -r requirements.txt"
+    startCommand: "cd backend && gunicorn app_main:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: NODE_VERSION
+        value: 18.0.0
+      - key: FLASK_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        sync: false # User must set this in Render UI
+      - key: GROQ_API_KEY
+        sync: false # User must set this in Render UI
+      - key: INSTAGRAM_USERNAME
+        sync: false # User must set this in Render UI
+      - key: INSTAGRAM_PASSWORD
+        sync: false # User must set this in Render UI
