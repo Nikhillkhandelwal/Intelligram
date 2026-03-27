@@ -33,6 +33,11 @@ const TrendDashboard = () => {
         <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-pink-500" /> Niche Trend Analysis
         </h2>
+        {data && data.is_live === false && (
+          <div className="mb-4 flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-100 italic">
+            <Sparkles className="w-3 h-3 animate-pulse" /> Predicted Trend Intelligence Active
+          </div>
+        )}
         <div className="flex gap-3 flex-wrap">
           {NICHES.map(n => (
             <button

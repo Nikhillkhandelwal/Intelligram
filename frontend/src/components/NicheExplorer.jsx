@@ -30,6 +30,11 @@ const NicheExplorer = () => {
         <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
           <Compass className="w-5 h-5 text-orange-500" /> Niche Explorer
         </h2>
+        {data && data.is_live === false && (
+          <div className="mb-4 flex items-center gap-2 px-3 py-1.5 bg-orange-50 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-orange-100 italic">
+            <Sparkles className="w-3 h-3 animate-pulse" /> Predicted Niche Intelligence Active
+          </div>
+        )}
         <div className="flex flex-wrap gap-2 mb-4">
           {NICHES.map(n => (
             <button key={n} onClick={() => setNiche(n)}

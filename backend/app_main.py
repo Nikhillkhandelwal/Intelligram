@@ -33,7 +33,11 @@ from app.competitor import CompetitorAnalyser
 from app.niche_engine import NicheEngine
 import pandas as pd
 
-app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
+# ── Flask Setup ───────────────────────────────────────────────────────────────
+_base_path = os.path.dirname(os.path.abspath(__file__))
+_dist_path = os.path.join(_base_path, '..', 'frontend', 'dist')
+
+app = Flask(__name__, static_folder=_dist_path, static_url_path='/')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # ── Singletons ───────────────────────────────────────────────────────────────
@@ -55,23 +59,23 @@ def _get_json():
             data = {}
     return data
 
-def _mock_df():
+def _mock_df(username="creator"):
     return pd.DataFrame([
-        {"post_id": "mock1", "type": "video",    "likes": 1200, "comments": 45,  "date": "2026-03-20",
-         "hour": 18, "day": "Friday",   "caption": "How I grew my account 10x in 90 days #growth #instagram",
+        {"post_id": "v1", "type": "video",    "likes": 2400, "comments": 85,  "date": "2026-03-20",
+         "hour": 18, "day": "Friday",   "caption": f"How I grew my {username} community 10x in 90 days #growth #india",
          "has_question": True,  "has_cta": True,  "audio_type": "trending"},
-        {"post_id": "mock2", "type": "image",    "likes":  800, "comments": 20,  "date": "2026-03-21",
-         "hour": 10, "day": "Saturday", "caption": "3 mistakes beginners make. Save this! #tips #learn",
+        {"post_id": "i1", "type": "image",    "likes": 1200, "comments": 30,  "date": "2026-03-21",
+         "hour": 10, "day": "Saturday", "caption": "3 mistakes I made starting out. Don't do this! #tips #learn",
          "has_question": False, "has_cta": True,  "audio_type": "none"},
-        {"post_id": "mock3", "type": "carousel", "likes": 1500, "comments": 60,  "date": "2026-03-22",
-         "hour": 20, "day": "Sunday",   "caption": "My honest story about failing and starting over. #motivation",
+        {"post_id": "c1", "type": "carousel", "likes": 3500, "comments": 120, "date": "2026-03-22",
+         "hour": 20, "day": "Sunday",   "caption": "My honest journey and the lessons learned. #motivation #india",
          "has_question": True,  "has_cta": False, "audio_type": "none"},
-        {"post_id": "mock4", "type": "video",    "likes": 2100, "comments": 90,  "date": "2026-03-19",
-         "hour": 19, "day": "Thursday", "caption": "POV: You stop scrolling because this trick actually works #viral",
+        {"post_id": "v2", "type": "video",    "likes": 5100, "comments": 290, "date": "2026-03-19",
+         "hour": 19, "day": "Thursday", "caption": "POV: You finally stopped scrolling and saw this 🔥 #viral #trends",
          "has_question": False, "has_cta": True,  "audio_type": "trending"},
-        {"post_id": "mock5", "type": "image",    "likes":  400, "comments": 10,  "date": "2026-03-18",
-         "hour":  9, "day": "Wednesday","caption": "Buy now — limited offer. Link in bio! #sale #promo",
-         "has_question": False, "has_cta": True,  "audio_type": "none"},
+        {"post_id": "i2", "type": "image",    "likes": 900,  "comments": 15,  "date": "2026-03-18",
+         "hour":  9, "day": "Wednesday","caption": "Grateful for the support. New updates soon! #community",
+         "has_question": False, "has_cta": False, "audio_type": "none"},
     ])
 
 # ── Routes ───────────────────────────────────────────────────────────────────
@@ -121,13 +125,14 @@ def analyze():
 
     # 1. Scrape Primary Account
     res_primary = scraper.fetch_posts(username)
-    if not res_primary or res_primary.get("posts") is None:
-        print(f"[/analyze] primary scrape failed — using mock data")
-        df_primary = _mock_df()
-        profile_primary = {"followers": 0, "following": 0}
-    else:
         df_primary = res_primary["posts"]
         profile_primary = res_primary["profile"]
+        is_live = True
+    else:
+        print(f"[/analyze] primary scrape failed — using mock data")
+        df_primary = _mock_df(username)
+        profile_primary = {"followers": 12500, "following": 450}
+        is_live = False
 
     # 2. Scrape Competitors (limit to 3 for performance)
     competitor_insights = []
@@ -185,6 +190,7 @@ def analyze():
         "posts":        df_primary.to_dict(orient="records"),
         "benchmarks":   competitor_insights,
         "audit_report": audit_report,
+        "is_live":      is_live
     })
 
 

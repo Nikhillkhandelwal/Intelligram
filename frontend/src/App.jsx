@@ -154,6 +154,11 @@ const App = () => {
                       <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]" /> Audit Executed Successfully
                     </div>
                     <h2 className="text-7xl font-black text-slate-900 tracking-tighter lowercase leading-none">@{data.username}</h2>
+                    {data.is_live === false && (
+                      <div className="mt-4 flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-100">
+                        <Sparkles className="w-3 h-3 animate-pulse" /> Predicted Intelligence Active (Live Scraping Limited)
+                      </div>
+                    )}
                     <p className="text-slate-400 font-bold mt-4 text-sm uppercase tracking-widest flex items-center gap-2">
                        <BarChart2 className="w-4 h-4" /> Comprehensive Data Set ({data.posts?.length} Points)
                     </p>
