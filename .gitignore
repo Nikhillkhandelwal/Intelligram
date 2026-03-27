@@ -36,6 +36,8 @@ server.log
 *.webp
 *.jpg
 !README.md
+!requirements.txt
+!backend/requirements.txt
 
 # System/IDE
 .gemini/

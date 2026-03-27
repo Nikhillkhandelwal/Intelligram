@@ -1,0 +1,11 @@
+flask
+flask-cors
+pandas
+instaloader
+openai
+python-dotenv
+sqlalchemy
+psycopg2-binary
+pytest
+waitress
+gunicorn
