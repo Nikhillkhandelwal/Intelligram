@@ -124,7 +124,7 @@ def analyze():
     print(f"[/analyze] {username} (competitors: {competitor_usernames})")
 
     # 1. Scrape Primary Account
-    res_primary = scraper.fetch_posts(username)
+    if res_primary and res_primary.get("posts") is not None and not res_primary["posts"].empty:
         df_primary = res_primary["posts"]
         profile_primary = res_primary["profile"]
         is_live = True
